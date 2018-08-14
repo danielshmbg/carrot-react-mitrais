@@ -17,6 +17,9 @@ import Barn from './components/Barn/Barn';
 import BarnCreate from './components/Barn/Create';
 import BarnEdit from './components/Barn/Edit';
 import BarnShow from './components/Barn/Show';
+import ManageBarn from './components/ManageBarn/List';
+import BarnHistory from './components/ManageBarn/BarnHistory';
+import BarnReward from './components/ManageBarn/BarnReward';
 
 
 ReactDOM.render(
@@ -35,6 +38,9 @@ ReactDOM.render(
         <Route path='/barn/edit/:id' component={BarnEdit} />
         <Route path='/barn/create' component={BarnCreate} />
         <Route path='/barn/show/:id' component={BarnShow} />
+        <Route path='/managebarn/list' component={ManageBarn} />
+        <Route path='/managebarn/history/:id' component={BarnHistory} />
+        <Route path='/managebarn/reward/:id' component={BarnReward} />
         </div>
     </Router>,
   document.getElementById('root')

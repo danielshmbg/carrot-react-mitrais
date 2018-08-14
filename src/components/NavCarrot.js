@@ -23,7 +23,10 @@ const NavCarrot = () => {
                         <a className="nav-link" href="/list">Manage Transaction</a>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link" href="/barn/list">Manage Barn</a>
+                        <a className="nav-link" href="/barn/list">Create Barn</a>
+                    </li>
+                    <li className="nav-item">
+                        <a className="nav-link" href="/managebarn/list">Manage Barn</a>
                     </li>
                 </ul>
             </div>
