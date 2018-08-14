@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import NavCarrot from '../NavCarrot';
 
 
 class Barn extends Component {
@@ -25,6 +26,9 @@ class Barn extends Component {
 
     render() {
         return (
+          <div>
+            <NavCarrot />
+
           <div className="container">
             <div className="panel panel-default">
               <div className="panel-heading">
@@ -45,13 +49,13 @@ class Barn extends Component {
                       <th>Carrot per Employee</th>
                       <th>Total Carrot</th>
                       <th>Status</th>
-                      <th>Created By</th>
+                      <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
                     {this.state.barn.map(t =>
                       <tr>
-                        <td><Link to={`/show/${t.id}`}>{t.id}</Link></td>
+                        <td><Link to={`/barn/show/${t.id}`}>{t.id}</Link></td>
                         <td>{t.name}</td>
                         <td>{t.startPeriod}</td>
                         <td>{t.endPeriod}</td>
@@ -59,13 +63,14 @@ class Barn extends Component {
                         <td>{t.carrotPerEmployee}</td>
                         <td>{t.totalCarrot}</td>
                         <td>{t.status}</td>
-                        <td>{t.createdBy}</td>
+                        <td><Link to={`/barn/show/${t.id}`} className="btn btn-warning">Detail</Link></td>
                       </tr>
                     )}
                   </tbody>
                 </table>
               </div>
             </div>
+          </div>
           </div>
         );
       }

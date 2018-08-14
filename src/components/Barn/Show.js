@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import NavCarrot from '../NavCarrot';
 
 
 class Show extends Component {
@@ -24,12 +25,14 @@ class Show extends Component {
       console.log(id);
       axios.delete('http://localhost:8080/mitraiscarrot/barn/'+id)
         .then((result) => {
-          this.props.history.push("/")
+          this.props.history.push("/barn/list")
         });
     }
   
     render() {
       return (
+        <div>
+            <NavCarrot />
         <div className="container">
           <div className="panel panel-default">
             <div className="panel-heading">
@@ -61,6 +64,7 @@ class Show extends Component {
               <button onClick={this.delete.bind(this, this.state.barn.id)} className="btn btn-danger">Delete</button>
             </div>
           </div>
+        </div>
         </div>
       );
     }

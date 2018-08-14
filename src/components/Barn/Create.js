@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import NavCarrot from '../NavCarrot';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+
+import moment from 'moment';
 
 class Create extends Component {
 
@@ -9,20 +13,23 @@ class Create extends Component {
     super();
     this.state = {
       name: "",
-      startPeriod:"2018-09-30",
-      endPeriod:"2019-09-30",
+      startPeriod:moment(),
+      endPeriod: moment().add(1, 'years'),
       owner:"",
       carrotPerEmployee:0,
       totalCarrot:0,
       status:"active",
       createdBy:"admin"
     };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleStartChange = this.handleStartChange.bind(this);
   }
   onChange = (e) => {
     const state = this.state
     state[e.target.name] = e.target.value;
     this.setState(state);
   }
+
 
   onSubmit = (e) => {
     e.preventDefault();
@@ -33,6 +40,18 @@ class Create extends Component {
       .then((result) => {
         this.props.history.push("/barn/list")
       });
+  }
+
+  handleStartChange(date) {
+    this.setState({
+      startPeriod: date
+    });
+  }
+
+  handleChange(date) {
+    this.setState({
+      endPeriod: date
+    });
   }
 
   render() {
@@ -56,15 +75,15 @@ class Create extends Component {
                   </div>
                   <div className="form-group">
                     <label for="startPeriod">Start Period:</label>
-                    <input type="text" className="form-control" name="startPeriod" value={startPeriod} onChange={this.onChange} placeholder="Start Period" />
+                    <DatePicker type="text" className="form-control" name="startPeriod" value={startPeriod} selected={this.state.startPeriod} onChange={this.handleStartChange} placeholder="Start Period" />
                   </div>
                   <div className="form-group">
                     <label for="endPeriod">End Period:</label>
-                    <input type="text" className="form-control" name="endPeriod" value={endPeriod} onChange={this.onChange} placeholder="End Period" />
+                    <DatePicker type="text" className="form-control" name="endPeriod" value={endPeriod} selected={this.state.endPeriod} onChange={this.handleChange} placeholder="End Period" />
                   </div>
                   <div className="form-group">
                     <label for="owner">Owner:</label>
-                    <input type="text" className="form-control" name="owner" value={owner} onChange={this.onChange} placeholder="Owner" />
+                    <input type="text" className="form-control" name="owner" value={owner} onChange={this.onChange}  placeholder="Owner" />
                   </div>
                   <div className="form-group">
                     <label for="carrotPerEmployee">Carrot per Employee:</label>

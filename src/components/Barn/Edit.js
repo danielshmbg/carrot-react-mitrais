@@ -2,23 +2,44 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import NavCarrot from '../NavCarrot';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+
+import moment from 'moment';
 
 class Edit extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      barn: {}
+      barn: { }
     };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleStartChange = this.handleStartChange.bind(this);
   }
 
   componentDidMount() {
     axios.get('http://localhost:8080/mitraiscarrot/barn/'+this.props.match.params.id)
       .then(res => {
+        res.data.startPeriod = moment(res.data.startPeriod,'YYYY-MM-DD');
+        res.data.endPeriod = moment(res.data.endPeriod,'YYYY-MM-DD');
         this.setState({ barn: res.data });
         console.log(this.state.barn);
       });
+      
   }
+
+  // componentDidMount(){
+  //   axios.get('http://localhost:8080/mitraiscarrot/barn/'+this.props.match.params.id)
+  //     .then(res => {
+  //       this.setState({ barn: res.data });
+        
+  //       console.log(this.state.barn);
+  //     });
+  //     let barn = Object.assign({}, this.state.barn);    //creating copy of object
+  //       barn.startPeriod = moment();//moment(this.state.barn.startPeriod,"YYYY-MM-DD");                        //updating value
+  //       this.setState({barn});
+  // }
 
   onChange = (e) => {
     const state = this.state.barn
@@ -35,6 +56,18 @@ class Edit extends Component {
       .then((result) => {
         this.props.history.push("/barn/show/"+this.props.match.params.id)
       });
+  }
+
+  handleStartChange(date) {
+    const state = this.state.barn
+    state["startPeriod"] = date;
+    this.setState({barn:state});
+  }
+
+  handleChange(date) {
+    const state = this.state.barn
+    state["endPeriod"] = date;
+    this.setState({barn:state});
   }
 
   render() {
@@ -57,11 +90,13 @@ class Edit extends Component {
                   </div>
                 <div className="form-group">
                   <label for="startPeriod">Start Period:</label>
-                  <input type="text" className="form-control" name="startPeriod" value={this.state.barn.startPeriod} onChange={this.onChange} placeholder="Start Date" />
+                  {/* <input type="text" className="form-control" name="startPeriod" value={this.state.barn.startPeriod} onChange={this.onChange} placeholder="Start Date" /> */}
+                  <DatePicker type="text" className="form-control" name="startPeriod" value={this.state.barn.startPeriod} selected={this.state.barn.startPeriod} onChange={this.handleStartChange} placeholder="Start Period" />
                 </div>
                 <div className="form-group">
                   <label for="endPeriod">End Period:</label>
-                  <input type="text" className="form-control" name="endPeriod" value={this.state.barn.endPeriod} onChange={this.onChange} placeholder="Start Date" />
+                  {/* <input type="text" className="form-control" name="endPeriod" value={this.state.barn.endPeriod} onChange={this.onChange} placeholder="Start Date" /> */}
+                  <DatePicker type="text" className="form-control" name="endPeriod" value={this.state.barn.endPeriod} selected={this.state.barn.endPeriod} onChange={this.handleChange} placeholder="End Period" />
                 </div>
                 <div className="form-group">
                   <label for="owner">Owner:</label>
